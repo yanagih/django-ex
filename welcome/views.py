@@ -7,6 +7,30 @@ from . import database
 from .models import PageView
 
 # Create your views here.
+def input_test(request):
+    """Takes an request object as a parameter and creates an pageview object then responds by rendering the index view."""
+    hostname = os.getenv('HOSTNAME', 'unknown')
+    PageView.objects.create(hostname=hostname)
+    
+    return render(request, 'welcome/input_test.html')
+
+def get_nyuuryoku(request):
+    message = 'データ受け取ったよ！'
+    if request.method == 'POST':
+        nyuryoku1 = request.POST['nyuryoku1']
+        nyuryoku2 = request.POST['nyuryoku2']
+        nyuryoku3 = request.POST['nyuryoku3']
+        
+        print("Hello!")
+        params = {
+            "nyuryoku1": nyuryoku1,
+            "nyuryoku2": nyuryoku2,
+            "nyuryoku3": nyuryoku3,
+            "message": message,
+        }
+
+        return render(request, '~', params)
+
 
 def index(request):
     """Takes an request object as a parameter and creates an pageview object then responds by rendering the index view."""

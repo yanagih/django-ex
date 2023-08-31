@@ -7,22 +7,11 @@
 </head>
 <body>
   <h1>input test</h1>
-  <form action="{% url 'welcome:input_test' %}" method="post">
+  <p>{{ insert_something }}</p>
+  <form action="{% url 'input_test' %}" method="post">
     {% csrf_token %}
-    <div class="field">
-        <label>入力１</label><input type="text" name="nyuryoku1" id="nyuryoku1">
-        <label>入力２</label><input type="text" name="nyuryoku2" id="nyuryoku2">
-        <label>入力３</label><input type="text" name="nyuryoku3" id="nyuryoku3">
-    </div>
+    {{ form }}
     <input type="submit" value="送信">
   </form>
-
-  <div class="field">
-    <h4>{{ nyuryoku1 }}</h4>
-    <h4>{{ nyuryoku2 }}</h4>
-    <h4>{{ nyuryoku3 }}</h4>
-    <h4>{{ message }}</h4>
-  </div>
-
 </body>
 </html>

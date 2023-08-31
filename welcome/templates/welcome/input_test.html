@@ -8,6 +8,7 @@
 <body>
   <h1>input test</h1>
   <p>{{ insert_something }}</p>
+  <p>{{ insert_forms|linebreaksbr }}</p>
   <form action="{% url 'input_test' %}" method="post">
     {% csrf_token %}
     {{ form }}

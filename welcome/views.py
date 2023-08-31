@@ -13,11 +13,17 @@ def input_test(request):
     hostname = os.getenv('HOSTNAME', 'unknown')
     PageView.objects.create(hostname=hostname)
     
-    output_dict = {
+    my_dict = {
         'insert_something': '表示テスト',
         'form': TestForm(),
+        'insert_forms': '初期値', 
     }
-    return render(request, 'welcome/input_test.html', output_dict)
+
+    if (request.method == 'POST'):
+        my_dict['insert_forms'] = '文字列:' + request.POST['text'] + '\n整数型:' + request.POST['num']
+        my_dict['form'] = TestForm(request.POST)
+
+    return render(request, 'welcome/input_test.html', my_dict)
 
 
 

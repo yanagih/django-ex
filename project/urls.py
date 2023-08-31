@@ -2,7 +2,7 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
 
-from welcome.views import index, health, test
+from welcome.views import index, health, test, measurements, jee, setting
 
 from django.conf.urls.static import static
 
@@ -12,6 +12,10 @@ urlpatterns = [
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^$', test),
+    url(r'^test$', test, name='test'),
+    url(r'^measurements$', measurements, name='measurements'),
+    url(r'^jee$', jee, name='jee'),
+    url(r'^setting$', setting, name='setting'),
     url(r'^health$', health),
     url(r'^admin/', include(admin.site.urls)),
 ]
@@ -23,3 +27,4 @@ if settings.DEBUG:
     ] + urlpatterns
 
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

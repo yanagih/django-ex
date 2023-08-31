@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 
 <html lang="en">
@@ -8,7 +9,8 @@
   <meta name="description" content="Example Health Site">
   <meta name="Anton McConville" content="Example Health">
   <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans" rel="stylesheet">
-  <link rel="stylesheet" href="style/styles.css?v=1.0">
+  <!-- <link rel="stylesheet" href="style/styles.css?v=1.0"> -->
+  <link rel="stylesheet" href="{% static 'style/styles.css?v=1.0' %}">
   <link rel="icon" type="image/png" href="images/Fictionallogo@2x.png">
   <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.js'></script>
   <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.css' rel='stylesheet' />
@@ -24,12 +26,13 @@
         </div>
         <menu class="menu">
           <menuitem class="lit">information</menuitem>
-          <a class="dimmed" href="./measurements.html">
+          <!-- <a class="dimmed" href="./measurements.html"> -->
+          <a class="dimmed" href="{% url 'measurements' %}">
             <menuitem class="dimmed">measurements</menuitem></a>
           <!-- <a class="dimmed" href="./labs.html"><menuitem class="dimmed">lab results</menuitem></a> -->
-          <a class="dimmed" href="./jee.html">
+          <a class="dimmed" href="{% url 'jee' %}">
             <menuitem class="dimmed">architecture</menuitem></a>
-          <a class="dimmed" href="./settings.html">
+          <a class="dimmed" href="{% url 'setting' %}">
             <menuitem class="dimmed">settings</menuitem></a>
         </menu>
         <a href="#" onclick="logout()">

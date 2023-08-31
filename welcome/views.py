@@ -33,3 +33,37 @@ def test(request):
         'database': database.info(),
         'count': PageView.objects.count()
     })
+
+def measurements(request):
+    """Takes an request object as a parameter and creates an pageview object then responds by rendering the index view."""
+    hostname = os.getenv('HOSTNAME', 'unknown')
+    PageView.objects.create(hostname=hostname)
+
+    return render(request, 'test/site/public/measurements.html', {
+        'hostname': hostname,
+        'database': database.info(),
+        'count': PageView.objects.count()
+    })
+
+def jee(request):
+    """Takes an request object as a parameter and creates an pageview object then responds by rendering the index view."""
+    hostname = os.getenv('HOSTNAME', 'unknown')
+    PageView.objects.create(hostname=hostname)
+
+    return render(request, 'test/site/public/jee.html', {
+        'hostname': hostname,
+        'database': database.info(),
+        'count': PageView.objects.count()
+    })
+
+
+def setting(request):
+    """Takes an request object as a parameter and creates an pageview object then responds by rendering the index view."""
+    hostname = os.getenv('HOSTNAME', 'unknown')
+    PageView.objects.create(hostname=hostname)
+
+    return render(request, 'test/site/public/setting.html', {
+        'hostname': hostname,
+        'database': database.info(),
+        'count': PageView.objects.count()
+    })

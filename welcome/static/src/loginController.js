@@ -83,5 +83,6 @@ function logout() {
   sessionStorage.removeItem("patientid");
   sessionStorage.removeItem("patientusername");
   window.location = '/login.html';
+  // window.location = "{% url 'login' %}";
   return;
 }

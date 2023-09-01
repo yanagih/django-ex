@@ -26,7 +26,6 @@
         </div>
         <menu class="menu">
           <menuitem class="lit">information</menuitem>
-          <!-- <a class="dimmed" href="./measurements.html"> -->
           <a class="dimmed" href="{% url 'measurements' %}">
             <menuitem class="dimmed">measurements</menuitem></a>
           <!-- <a class="dimmed" href="./labs.html"><menuitem class="dimmed">lab results</menuitem></a> -->
@@ -78,6 +77,49 @@
         <div class="map" id='map'></div>
       </div>
 
+      <div class="box">
+        <div class="boxheader">
+          <img class="boxicon" src="/images/doctor.svg">
+          <div class="boxlabel">Forms</div>
+        </div>
+        <div class="formtitle">病院検索</div>
+        <div class="forms">
+          <form action="" method="post">
+            <!--
+            <p>{{ insert_something }}</p>
+            <p>{{ insert_forms|linebreaksbr }}</p>
+            -->
+            <!--
+            {% csrf_token %}
+            {{ form }}
+            -->
+            <div class="formdate">
+              <label for="date">通院日: </label>
+              <input type="date" name="date" id="date" required />
+            </div>
+            <div class="formsymptoms">
+              <label for="symptoms">症状:</label>
+              <select name="pets" id="symptoms">
+                <option value="">--Please choose an option--</option>
+                <option value="dog">Dog</option>
+                <option value="cat">Cat</option>
+                <option value="hamster">Hamster</option>
+                <option value="parrot">Parrot</option>
+                <option value="spider">Spider</option>
+                <option value="goldfish">Goldfish</option>
+              </select>
+            </div>
+            <input type="submit" value="送信">
+          </form>
+        </div>
+        <div class="result">
+          <p>医療機関名 〇〇クリニック</p>
+          <p>電話番号　000-1234-5678</p>
+          <p>診療時間　10:00~12:00, 15:00~17:00</p>
+        </div>
+        
+      </div>
+
     </div>
   </div>
 </body>
@@ -92,7 +134,7 @@
     zoom: 9 // starting zoom
   });
 </script>
-<script src="src/informationController.js"></script>
-<script src="src/loginController.js"></script>
+<!-- <script src="{% static 'src/informationController.js' %}"></script> -->
+<!-- <script src="{% static 'src/loginController.js' %}"></script> -->
 
 </html>

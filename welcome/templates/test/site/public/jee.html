@@ -27,13 +27,13 @@
           <!-- <a class="dimmed" href="./index.html"> -->
           <a class="dimmed" href="{% url 'test' %}">
             <menuitem>information</menuitem></a>
-          <a class="dimmed" href="./measurements.html">
+          <a class="dimmed" href="{% url 'measurements' %}">
             <menuitem>measurements</menuitem></a>
           <!-- <a class="dimmed" href="./labs.html">
             <menuitem>lab results</menuitem></a> -->
-          <a class="dimmed" href="./about.html">
+          <a class="dimmed" href="{% url 'about' %}">
             <menuitem class="lit">architecture</menuitem></a>
-              <a class="dimmed" href="./settings.html"><menuitem class="dimmed">settings</menuitem></a>
+              <a class="dimmed" href="{% url 'setting' %}"><menuitem class="dimmed">settings</menuitem></a>
         </menu>
         <div class="account" id="logout"></div>
       </div>

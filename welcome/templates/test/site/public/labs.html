@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 
 <html lang="en">
@@ -9,7 +10,8 @@
   <meta name="description" content="Example Health Site">
   <meta name="Anton McConville" content="Example Health">
   <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans" rel="stylesheet">
-  <link rel="stylesheet" href="style/styles.css?v=1.0">
+  <!-- <link rel="stylesheet" href="style/styles.css?v=1.0"> -->
+  <link rel="stylesheet" href="{% static 'style/styles.css?v=1.0' %}">
   <link rel="icon" type="image/png" href="images/Examplelogo@2x.png">
 </head>
 
@@ -22,11 +24,11 @@
           <div class="Example">Example Health</div>
         </div>
         <menu class="menu">
-          <a class="dimmed" href="./index.html"><menuitem>information</menuitem></a>
-          <a class="dimmed" href="./measurements.html"><menuitem>measurements</menuitem></a>
+          <a class="dimmed" href="{% url 'test' %}"><menuitem>information</menuitem></a>
+          <a class="dimmed" href="{% url 'measurements' %}"><menuitem>measurements</menuitem></a>
           <!-- <a class="lit" href="./labs.html"><menuitem>lab results</menuitem></a> -->
-            <a class="dimmed" href="./jee.html"><menuitem class="dimmed">architecture</menuitem></a>
-  <a class="dimmed" href="./settings.html"><menuitem class="dimmed">settings</menuitem></a>
+            <a class="dimmed" href="{% url 'jee' %}"><menuitem class="dimmed">architecture</menuitem></a>
+  <a class="dimmed" href="{% url 'setting' %}"><menuitem class="dimmed">settings</menuitem></a>
         </menu>
         <div class="account">ralph/logout</div>
       </div>

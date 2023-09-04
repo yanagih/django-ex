@@ -2,7 +2,8 @@ function retrievePatientInformation() {
 
   if (!sessionStorage.getItem("patientid")) {
     console.log("Redirecting to login");
-    window.location = '/login.html';
+    // window.location = '/login.html';
+    window.location = '/login';
     return;
   }
 

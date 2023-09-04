@@ -133,6 +133,16 @@ def login(request):
     if (request.method == 'POST'):
         print("Hello")
 
+    # my_dict = {
+    #     'username': '',
+    #     'password': '', 
+    # }
+    # if (request.method == 'POST'):
+    #     if 'username' in request.GET:
+    #         my_dict['username'] = request.GET['username']
+    #     if 'password' in request.GET:
+    #         my_dict['password'] = request.GET['password']
+
     return render(request, 'test/site/public/login.html', {
         'hostname': hostname,
         'database': database.info(),

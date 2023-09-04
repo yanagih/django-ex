@@ -1,11 +1,13 @@
 import os
+import datetime
+import json
 from django.shortcuts import render
 from django.conf import settings
 from django.http import HttpResponse
 
 from . import database
 from .models import PageView
-from .forms import TestForm
+from .forms import PracticeForm
 
 # Create your views here.
 def index(request):
@@ -27,12 +29,33 @@ def test(request):
     """Takes an request object as a parameter and creates an pageview object then responds by rendering the index view."""
     hostname = os.getenv('HOSTNAME', 'unknown')
     PageView.objects.create(hostname=hostname)
-
-    return render(request, 'test/site/public/index.html', {
+    
+    return_dict = {
         'hostname': hostname,
         'database': database.info(),
-        'count': PageView.objects.count()
-    })
+        'count': PageView.objects.count(),
+        'form': PracticeForm(),
+        'medical_institution': '初期値', 
+        'phone_number': '初期値', 
+        'office_hours': '初期値', 
+    }
+
+    medical_institutions = read_medical_institutions()
+
+    if (request.method == 'POST'):
+        year, month, day = list(map(int, request.POST['consultation_day'].split("-")))
+        dt = datetime.datetime(year, month, day)
+
+        department_dict = {1: "内科", 2: "内科", 3: "歯科", 4: "整形外科", 5: "耳鼻科", 6: "皮膚科", 7: "整形外科"}
+        department = department_dict[int(request.POST['condition'])]
+
+        institution = medical_institutions[department]
+        return_dict['medical_institution'] = institution["病院名"]
+        return_dict['phone_number'] = institution["TEL"]        
+        return_dict['office_hours'] = institution["営業時間"][dt.strftime('%a')]
+        return_dict['form'] = PracticeForm(request.POST)
+
+    return render(request, 'test/site/public/index.html', return_dict)
 
 def measurements(request):
     """Takes an request object as a parameter and creates an pageview object then responds by rendering the index view."""
@@ -111,19 +134,77 @@ def login(request):
         'count': PageView.objects.count()
     })
 
-def input_test(request):
-    """Takes an request object as a parameter and creates an pageview object then responds by rendering the index view."""
-    hostname = os.getenv('HOSTNAME', 'unknown')
-    PageView.objects.create(hostname=hostname)
-    
-    my_dict = {
-        'insert_something': '表示テスト',
-        'form': TestForm(),
-        'insert_forms': '初期値', 
+def read_medical_institutions():
+    """""
+    json_open = open('medical_institutions.json', 'r')
+    medical_institutions = json.load(json_open)
+    """""
+    medical_institutions = {
+        "耳鼻科":{
+            "病院名":"〇〇耳鼻科",
+            "TEL": "000-1234-5678", 
+            "営業時間": {
+                "Mon": "10:00~12:00, 15:00~17:00",
+                "Tue": "10:00~12:00, 15:00~17:00",
+                "Wed": "10:00~12:00, 15:00~17:00",
+                "Thu": "休業",
+                "Fri": "10:00~12:00, 15:00~17:00",
+                "Sat": "10:00~13:00",
+                "Sun": "10:00~12:00, 15:00~17:00"
+            }
+        },
+        "内科":{
+            "病院名":"△△内科",
+            "TEL": "001-1234-5678", 
+            "営業時間": {
+                "Mon": "9:00~12:00, 14:00~16:00",
+                "Tue": "9:00~12:00, 14:00~16:00",
+                "Wed": "9:00~12:00, 14:00~16:00",
+                "Thu": "9:00~12:00, 14:00~16:00",
+                "Fri": "9:00~12:00",
+                "Sat": "9:00~12:00, 14:00~16:00",
+                "Sun": "9:00~12:00, 14:00~16:00"
+            }
+        },
+        "歯科":{
+            "病院名":"□□デンタルクリニック",
+            "TEL": "002-1234-5678", 
+            "営業時間": {
+                "Mon": "10:00~12:00, 15:00~19:00",
+                "Tue": "10:00~12:00, 15:00~19:00",
+                "Wed": "10:00~12:00, 15:00~19:00",
+                "Thu": "休業",
+                "Fri": "10:00~12:00, 15:00~19:00",
+                "Sat": "10:00~12:00, 15:00~19:00",
+                "Sun": "休業"
+            }
+        },
+        "整形外科":{
+            "病院名":"◯△整形外科",
+            "TEL": "003-1234-5678", 
+            "営業時間": {
+                "Mon": "10:00~13:00, 15:00~17:00",
+                "Tue": "10:00~13:00, 15:00~17:00",
+                "Wed": "10:00~13:00",
+                "Thu": "10:00~13:00, 15:00~17:00",
+                "Fri": "10:00~13:00, 15:00~17:00",
+                "Sat": "10:00~13:00, 15:00~17:00",
+                "Sun": "休業"
+            }
+        },
+        "皮膚科":{
+            "病院名":"◯□皮膚科",
+            "TEL": "004-1234-5678", 
+            "営業時間": {
+                "Mon": "10:00~12:00, 15:00~16:30",
+                "Tue": "10:00~12:00, 15:00~16:30",
+                "Wed": "10:00~13:00",
+                "Thu": "10:00~12:00, 15:00~16:30",
+                "Fri": "10:00~12:00, 15:00~16:30",
+                "Sat": "10:00~12:00, 15:00~16:30",
+                "Sun": "休業"
+            }
+        }
     }
+    return medical_institutions
 
-    if (request.method == 'POST'):
-        my_dict['insert_forms'] = '文字列:' + request.POST['text'] + '\n整数型:' + request.POST['num']
-        my_dict['form'] = TestForm(request.POST)
-
-    return render(request, 'welcome/input_test.html', my_dict)

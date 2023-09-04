@@ -129,8 +129,9 @@ def login(request):
     PageView.objects.create(hostname=hostname)
 
     # TODO: ここにログイン処理を追加
-    # if (request.method == 'POST'):
-    #     print(request.POST.get("username"))
+    print(request.method)
+    if (request.method == 'POST'):
+        print("Hello")
 
     return render(request, 'test/site/public/login.html', {
         'hostname': hostname,
@@ -140,7 +141,7 @@ def login(request):
 
 def read_medical_institutions():
     """""
-    json_open = open('medical_institutions.json', 'r')
+    json_open = open('./medical_institutions.json', 'r')
     medical_institutions = json.load(json_open)
     """""
     medical_institutions = {

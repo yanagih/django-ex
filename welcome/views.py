@@ -128,6 +128,10 @@ def login(request):
     hostname = os.getenv('HOSTNAME', 'unknown')
     PageView.objects.create(hostname=hostname)
 
+    # TODO: ここにログイン処理を追加
+    # if (request.method == 'POST'):
+    #     print(request.POST.get("username"))
+
     return render(request, 'test/site/public/login.html', {
         'hostname': hostname,
         'database': database.info(),

@@ -84,15 +84,12 @@
         </div>
         <div class="formtitle">病院検索</div>
         <div class="forms">
-          <form action="" method="post">
-            <!--
-            <p>{{ insert_something }}</p>
-            <p>{{ insert_forms|linebreaksbr }}</p>
-            -->
-            <!--
+          <form action="{% url 'test' %}" method="post">
             {% csrf_token %}
             {{ form }}
-            -->
+            <input type="submit" value="送信">
+          </form>
+          <!--<form action="" method="post">
             <div class="formdate">
               <label for="date">通院日: </label>
               <input type="date" name="date" id="date" required />
@@ -110,12 +107,15 @@
               </select>
             </div>
             <input type="submit" value="送信">
-          </form>
+          </form>-->
         </div>
         <div class="result">
-          <p>医療機関名 〇〇クリニック</p>
-          <p>電話番号　000-1234-5678</p>
-          <p>診療時間　10:00~12:00, 15:00~17:00</p>
+          <p>医療機関名 {{ medical_institution|linebreaksbr }}</p>
+          <p>電話番号 {{ phone_number|linebreaksbr }}</p>  
+          <p>診療時間 {{ office_hours|linebreaksbr }}</p>
+          <!--<p>医療機関名 〇〇クリニック</p>
+          <p>電話番号 000-1234-5678</p>
+          <p>診療時間 10:00~12:00, 15:00~17:00</p>-->
         </div>
         
       </div>

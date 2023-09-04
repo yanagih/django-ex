@@ -12,7 +12,6 @@ urlpatterns = [
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^$', test, name='test'),
-    # url(r'^test$', test, name='test'),
     url(r'^measurements$', measurements, name='measurements'),
     url(r'^jee$', jee, name='jee'),
     url(r'^setting$', setting, name='setting'),

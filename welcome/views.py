@@ -62,6 +62,27 @@ def measurements(request):
     hostname = os.getenv('HOSTNAME', 'unknown')
     PageView.objects.create(hostname=hostname)
 
+    # global CURRENTMODE
+
+    # app.jsから移植
+    # ここわかんない。
+    
+    # logger.debug('called the measurements endpoint for ' + req.query.id);
+
+    # if (request.method == 'GET'):
+    #     if (CURRENTMODE == MODE.TEST):
+    #         measurements = {
+    #             smokerstatus: 'Former smoker',
+    #             dia: 88,
+    #             sys: 130,
+    #             bmi: 19.74,
+    #             bmirange: 'normal',
+    #             weight: 54.42,
+    #             height: 1.6603
+    #         }
+        
+    #     res.send(measurements);
+
     return render(request, 'test/site/public/measurements.html', {
         'hostname': hostname,
         'database': database.info(),
@@ -233,6 +254,7 @@ CURRENTMODE = MODE['TEST']
 API_URL = ""
 
 def mode(request):
+    global CURRENTMODE
     # app.jsの30-38行目を移植
     if (request.method == 'POST'):
         if 'mode' in request.GET:
@@ -254,9 +276,11 @@ def mode(request):
         return
 
 def info(request):
+    global CURRENTMODE
+
     if (request.method == 'GET'):
         # app.jsの48-66行目を移植
-        
+
         # logger.debug('called the information endpoint for ' + req.query.id);
 
         if (CURRENTMODE == MODE['TEST']):

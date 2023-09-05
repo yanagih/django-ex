@@ -223,3 +223,58 @@ def read_medical_institutions():
     }
     return medical_institutions
 
+# app.jsより移植
+MODE = {
+    "TEST": 1,
+    "Z": 2,
+    "OPENSHIFT": 3
+}
+CURRENTMODE = MODE['TEST']
+API_URL = ""
+
+def mode(request):
+    # app.jsの30-38行目を移植
+    if (request.method == 'POST'):
+        if 'mode' in request.GET:
+            CURRENTMODE = request.GET['mode']
+        if 'url' in request.GET:
+            CURRENTMODE = request.GET['url']
+    
+        return HttpResponse({
+            "modes": MODE,
+            "mode": CURRENTMODE
+        })
+    # app.jsの40-44行目を移植
+    elif (request.method == 'GET'):
+        return HttpResponse({
+            "modes": MODE,
+            "mode": CURRENTMODE
+        })
+    else:
+        return
+
+def info(request):
+    if (request.method == 'GET'):
+        # app.jsの48-66行目を移植
+        
+        # logger.debug('called the information endpoint for ' + req.query.id);
+
+        if (CURRENTMODE == MODE['TEST']):
+            patientdata = {
+                "personal": {
+                    "name": "Ralph DAlmeida",
+                    "age": 38,
+                    "gender": "male",
+                    "street": "34 Main Street",
+                    "city": "Toronto",
+                    "zipcode": "M5H 1T1"
+                },
+                "medications": ["Metoprolol", "ACE inhibitors", "Vitamin D"],
+                "appointments": ["2018-01-15 1:00 - Dentist", "2018-02-14 4:00 - Internal Medicine", "2018-09-30 8:00 - Pediatry"]
+            }
+
+            return HttpResponse(patientdata)
+        else:
+            return
+            # この辺はbackendpi.jsの書き直しも必要そうなので、書くのが難しい。
+            # そのため、現状はCURRENTMODE=TESTでしか動かせない。

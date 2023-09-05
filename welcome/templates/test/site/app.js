@@ -48,9 +48,10 @@ app.get('/info', function(req, res) {
   logger.debug('called the information endpoint for ' + req.query.id);
 
   var patientdata;
-
+// APIを呼び出し、personalを取得
   if (CURRENTMODE == MODE.TEST) {
     patientdata = {
+      // 取得したpersonalを使用する
       "personal": {
         "name": "Ralph DAlmeida",
         "age": 38,

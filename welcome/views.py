@@ -66,7 +66,7 @@ def measurements(request):
 
     # app.jsから移植
     # ここわかんない。
-    
+
     # logger.debug('called the measurements endpoint for ' + req.query.id);
 
     # if (request.method == 'GET'):
@@ -286,7 +286,7 @@ def info(request):
         if (CURRENTMODE == MODE['TEST']):
             patientdata = {
                 "personal": {
-                    "name": "Ralph DAlmeida",
+                    "name": "Ralph",
                     "age": 38,
                     "gender": "male",
                     "street": "34 Main Street",
@@ -297,7 +297,7 @@ def info(request):
                 "appointments": ["2018-01-15 1:00 - Dentist", "2018-02-14 4:00 - Internal Medicine", "2018-09-30 8:00 - Pediatry"]
             }
 
-            return HttpResponse(patientdata)
+            return HttpResponse(json.dumps(patientdata))
         else:
             return
             # この辺はbackendpi.jsの書き直しも必要そうなので、書くのが難しい。

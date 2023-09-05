@@ -2,7 +2,7 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
 
-from welcome.views import index, health, test, measurements, jee, setting, about, admin, labs, login
+from welcome.views import index, health, test, measurements, jee, setting, about, admin, labs, login, mode, info
 
 from django.conf.urls.static import static
 
@@ -19,6 +19,8 @@ urlpatterns = [
     url(r'^admin$', admin, name='admin'),
     url(r'^labs$', labs, name='labs'),
     url(r'^login$', login, name='login'),
+    url(r'^mode$', mode),
+    url(r'^info$', info),
     url(r'^health$', health),
     # url(r'^admin/', include(admin.site.urls)),
 ]

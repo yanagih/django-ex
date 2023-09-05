@@ -82,7 +82,7 @@ function login() {
   } else {
     sessionStorage.setItem("patientid", username);
     sessionStorage.setItem("patientusername", username);
-    window.location = '/';
+    window.location = '/';  
   }
 }
 

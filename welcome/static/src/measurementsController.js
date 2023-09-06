@@ -2,11 +2,11 @@ function retrieveMeasurementInformation() {
 
   if (!sessionStorage.getItem("patientid")) {
     console.log("Redirecting to login");
-    window.location = '/login.html';
+    window.location = '/login';
     return;
   }
 
-  var url = "./measurements";
+  var url = "./measurementsdata";
   var params = "id="+sessionStorage.getItem("patientid");
 
   var http = new XMLHttpRequest();

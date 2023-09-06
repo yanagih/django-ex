@@ -89,7 +89,7 @@ function login() {
 function logout() {
   sessionStorage.removeItem("patientid");
   sessionStorage.removeItem("patientusername");
-  window.location = '/login.html';
+  window.location = '/login';
   // window.location = "{% url 'login' %}";
   return;
 }

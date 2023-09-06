@@ -21,9 +21,9 @@ def index(request):
         'count': PageView.objects.count()
     })
 
-def health(request):
-    """Takes an request as a parameter and gives the count of pageview objects as reponse"""
-    return HttpResponse(PageView.objects.count())
+# def health(request):
+#     """Takes an request as a parameter and gives the count of pageview objects as reponse"""
+#     return HttpResponse(PageView.objects.count())
 
 def test(request):
     """Takes an request object as a parameter and creates an pageview object then responds by rendering the index view."""
@@ -62,32 +62,25 @@ def measurements(request):
     hostname = os.getenv('HOSTNAME', 'unknown')
     PageView.objects.create(hostname=hostname)
 
-    # global CURRENTMODE
-
-    # app.jsから移植
-    # ここわかんない。
-
-    # logger.debug('called the measurements endpoint for ' + req.query.id);
-
-    # if (request.method == 'GET'):
-    #     if (CURRENTMODE == MODE.TEST):
-    #         measurements = {
-    #             smokerstatus: 'Former smoker',
-    #             dia: 88,
-    #             sys: 130,
-    #             bmi: 19.74,
-    #             bmirange: 'normal',
-    #             weight: 54.42,
-    #             height: 1.6603
-    #         }
-        
-    #     res.send(measurements);
-
     return render(request, 'test/site/public/measurements.html', {
         'hostname': hostname,
         'database': database.info(),
         'count': PageView.objects.count()
     })
+
+# htmlとhtmlに表示するデータとで分ける
+# measurementController.jsの9行目を変更
+def measurementsdata(request):
+    measurements = {
+        "smokerstatus": "Former smoker",
+        "dia": 88,
+        "sys": 130,
+        "bmi": 19.74,
+        "bmirange": "normal",
+        "weight": 54.42,
+        "height": 1.6603
+    }
+    return HttpResponse(json.dumps(measurements))
 
 def jee(request):
     """Takes an request object as a parameter and creates an pageview object then responds by rendering the index view."""
@@ -283,6 +276,7 @@ def info(request):
 
         # logger.debug('called the information endpoint for ' + req.query.id);
 
+        # ここはbackend_api.pyの関数を呼ぶように変更が必要。
         if (CURRENTMODE == MODE['TEST']):
             patientdata = {
                 "personal": {
@@ -298,6 +292,8 @@ def info(request):
             }
 
             return HttpResponse(json.dumps(patientdata))
+            # return HttpResponse(patientdata) これだと動かない
+            # REST APIではjson.dumpsが必要
         else:
             return
             # この辺はbackendpi.jsの書き直しも必要そうなので、書くのが難しい。

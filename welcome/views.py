@@ -36,9 +36,9 @@ def test(request):
         'database': database.info(),
         'count': PageView.objects.count(),
         'form': PracticeForm(),
-        'medical_institution': '初期値', 
-        'phone_number': '初期値', 
-        'office_hours': '初期値', 
+        'medical_institution': '　', 
+        'phone_number': '　', 
+        'office_hours': '　', 
     }
 
     medical_institutions = read_medical_institutions()

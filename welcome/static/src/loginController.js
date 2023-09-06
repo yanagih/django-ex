@@ -44,38 +44,23 @@ function field_blur(field, email) {
 function login() {
   console.log("In login");
 
-
-
   var username = document.getElementById('username').value;
   var password = document.getElementById('password').value;
 
   if (mode != 1) {
 
-    var url = "/login";
+    var url = "./login";
     var params = "username=" + username + "&password=" + password;
 
-    // var http = new XMLHttpRequest();
+    var http = new XMLHttpRequest();
 
-    // http.open("POST", url + "?" + params, true);
+    http.open("POST", url, false);
+    http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-    // http.onreadystatechange = function() {
-    //   if (http.readyState == 4 && http.status == 200) {
-    //     var patientid = JSON.parse(http.responseText);
+    http.send(params);
 
-    //     if (patientid.id) {
-    //       sessionStorage.setItem("patientid", patientid.id);
-    //       sessionStorage.setItem("patientusername", username);
-    //     }
-
-    //     window.location = '/';
-    //     return;
-    //   }
-    // }
-    // http.send(null);
-
-    console.log("ログイン処理しない");
-    sessionStorage.setItem("patientid", "suzuki");
-    sessionStorage.setItem("patientusername", "suzuki");
+    sessionStorage.setItem("patientid", username);
+    sessionStorage.setItem("patientusername", username);
     window.location = '/';
     return;
 

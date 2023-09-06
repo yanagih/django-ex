@@ -21,7 +21,7 @@ urlpatterns = [
     url(r'^labs$', labs, name='labs'),
     url(r'^login$', login, name='login'),
     url(r'^mode$', mode),
-    url(r'^info$', info)
+    url(r'^info$', info),
     # url(r'^admin/', include(admin.site.urls)),
 ]
 

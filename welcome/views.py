@@ -4,10 +4,14 @@ import json
 from django.shortcuts import render
 from django.conf import settings
 from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 
-from . import database
+from . import database, backend_api
 from .models import PageView
 from .forms import PracticeForm
+
+module_dir = os.path.dirname(__file__)
+json_path = os.path.join(module_dir, 'medical_institutions.json')
 
 # Create your views here.
 def index(request):
@@ -21,9 +25,6 @@ def index(request):
         'count': PageView.objects.count()
     })
 
-# def health(request):
-#     """Takes an request as a parameter and gives the count of pageview objects as reponse"""
-#     return HttpResponse(PageView.objects.count())
 
 def test(request):
     """Takes an request object as a parameter and creates an pageview object then responds by rendering the index view."""
@@ -137,25 +138,22 @@ def labs(request):
         'count': PageView.objects.count()
     })
 
+# CSRF検証を無効化したい関数にのみアノテーション追加(これがないと403エラーになる)
+@csrf_exempt
 def login(request):
     """Takes an request object as a parameter and creates an pageview object then responds by rendering the index view."""
     hostname = os.getenv('HOSTNAME', 'unknown')
     PageView.objects.create(hostname=hostname)
 
     # TODO: ここにログイン処理を追加
+    print("login関数")
     print(request.method)
     if (request.method == 'POST'):
-        print("Hello")
-
-    # my_dict = {
-    #     'username': '',
-    #     'password': '', 
-    # }
-    # if (request.method == 'POST'):
-    #     if 'username' in request.GET:
-    #         my_dict['username'] = request.GET['username']
-    #     if 'password' in request.GET:
-    #         my_dict['password'] = request.GET['password']
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        print(username)
+        print(password)
+        patient_login = backend_api.patient_login("", username, password)
 
     return render(request, 'test/site/public/login.html', {
         'hostname': hostname,
@@ -164,77 +162,8 @@ def login(request):
     })
 
 def read_medical_institutions():
-    """""
-    json_open = open('./medical_institutions.json', 'r')
+    json_open = open(json_path, 'r')
     medical_institutions = json.load(json_open)
-    """""
-    medical_institutions = {
-        "耳鼻科":{
-            "病院名":"〇〇耳鼻科",
-            "TEL": "000-1234-5678", 
-            "営業時間": {
-                "Mon": "10:00~12:00, 15:00~17:00",
-                "Tue": "10:00~12:00, 15:00~17:00",
-                "Wed": "10:00~12:00, 15:00~17:00",
-                "Thu": "休業",
-                "Fri": "10:00~12:00, 15:00~17:00",
-                "Sat": "10:00~13:00",
-                "Sun": "10:00~12:00, 15:00~17:00"
-            }
-        },
-        "内科":{
-            "病院名":"△△内科",
-            "TEL": "001-1234-5678", 
-            "営業時間": {
-                "Mon": "9:00~12:00, 14:00~16:00",
-                "Tue": "9:00~12:00, 14:00~16:00",
-                "Wed": "9:00~12:00, 14:00~16:00",
-                "Thu": "9:00~12:00, 14:00~16:00",
-                "Fri": "9:00~12:00",
-                "Sat": "9:00~12:00, 14:00~16:00",
-                "Sun": "9:00~12:00, 14:00~16:00"
-            }
-        },
-        "歯科":{
-            "病院名":"□□デンタルクリニック",
-            "TEL": "002-1234-5678", 
-            "営業時間": {
-                "Mon": "10:00~12:00, 15:00~19:00",
-                "Tue": "10:00~12:00, 15:00~19:00",
-                "Wed": "10:00~12:00, 15:00~19:00",
-                "Thu": "休業",
-                "Fri": "10:00~12:00, 15:00~19:00",
-                "Sat": "10:00~12:00, 15:00~19:00",
-                "Sun": "休業"
-            }
-        },
-        "整形外科":{
-            "病院名":"◯△整形外科",
-            "TEL": "003-1234-5678", 
-            "営業時間": {
-                "Mon": "10:00~13:00, 15:00~17:00",
-                "Tue": "10:00~13:00, 15:00~17:00",
-                "Wed": "10:00~13:00",
-                "Thu": "10:00~13:00, 15:00~17:00",
-                "Fri": "10:00~13:00, 15:00~17:00",
-                "Sat": "10:00~13:00, 15:00~17:00",
-                "Sun": "休業"
-            }
-        },
-        "皮膚科":{
-            "病院名":"◯□皮膚科",
-            "TEL": "004-1234-5678", 
-            "営業時間": {
-                "Mon": "10:00~12:00, 15:00~16:30",
-                "Tue": "10:00~12:00, 15:00~16:30",
-                "Wed": "10:00~13:00",
-                "Thu": "10:00~12:00, 15:00~16:30",
-                "Fri": "10:00~12:00, 15:00~16:30",
-                "Sat": "10:00~12:00, 15:00~16:30",
-                "Sun": "休業"
-            }
-        }
-    }
     return medical_institutions
 
 # app.jsより移植
@@ -247,6 +176,7 @@ CURRENTMODE = MODE['TEST']
 API_URL = ""
 
 def mode(request):
+    print("mode関数")
     global CURRENTMODE
     # app.jsの30-38行目を移植
     if (request.method == 'POST'):

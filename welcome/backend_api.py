@@ -1,4 +1,5 @@
 # backendApi.jsのPython版
+# url = "https://api.us.apiconnect.ibmcloud.com/spbodieusibmcom-kenishia/sb/"
 
 # getPatientInfo
 def get_patient_info(url, patient_id):
@@ -25,7 +26,8 @@ def get_patient_info(url, patient_id):
 
 
 # patientLogin
-
+def patient_login(url, username, password):
+    return username
 
 
 # getAge（getPatientInfoで使用）

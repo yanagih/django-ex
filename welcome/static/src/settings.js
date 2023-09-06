@@ -116,7 +116,7 @@ function setModeOnServer(mode) {
       // sessionStorage.removeItem(patientusername);
       sessionStorage.setItem("patientUImode", mode);
 
-      window.location = '/login.html';
+      window.location = '/login';
 
     }
   }

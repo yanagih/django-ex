@@ -26,7 +26,6 @@
           <div class="Fictional">Example Health</div>
         </div>
         <menu class="menu">
-          <!-- <a class="dimmed" href="./index.html"> -->
           <a class="dimmed" href="{% url 'test' %}">
             <menuitem>information</menuitem></a>
           <a class="dimmed" href="{% url 'measurements' %}">
@@ -77,6 +76,6 @@
   </div>
 </body>
 
-<script src="src/settings.js"></script>
+<script src="{% static 'src/settings.js' %}"></script>
 
 </html>

@@ -2,7 +2,8 @@ var request = require('request');
 // var API_URL = "https://api.us.apiconnect.ibmcloud.com/spbodieusibmcom-kenishia/sb/";
 
 function getPatientInfo(url, patientID) {
-	return new Promise(function(resolve, reject) {
+	return new Promise(function(resolve, reject) { // 非同期処理は無視でOK
+		// 第一引数のURLにリクエストを投げて、レスポンスを第二引数の関数に入れている
 		request(url + "getInfo/patients/" + patientID, function (error, response, body) {
 	 		if (!error && response.statusCode == 200) {
 
@@ -15,7 +16,7 @@ function getPatientInfo(url, patientID) {
 					      city: body["HCCMAREA"]["CA_PATIENT_REQUEST"]["CA_CITY"],
 					      zipcode: body["HCCMAREA"]["CA_PATIENT_REQUEST"]["CA_POSTCODE"]
 				};
-				return resolve(patientInfo);
+				return resolve(patientInfo); // resolve：非同期処理が成功した場合に呼び出す処理
 	  		} else {
 	  			return resolve({});
 	  		}
@@ -149,6 +150,7 @@ function patientLogin(url, username, password) {
 	})
 }
 
+// すぐできる
 function getAge(dateString)
 {
     var today = new Date();

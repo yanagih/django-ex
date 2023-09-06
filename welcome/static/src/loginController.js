@@ -44,8 +44,6 @@ function field_blur(field, email) {
 function login() {
   console.log("In login");
 
-
-
   var username = document.getElementById('username').value;
   var password = document.getElementById('password').value;
 
@@ -56,33 +54,27 @@ function login() {
 
     var http = new XMLHttpRequest();
 
-    http.open("POST", url + "?" + params, true);
+    http.open("POST", url, false);
+    http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-    http.onreadystatechange = function() {
-      if (http.readyState == 4 && http.status == 200) {
-        var patientid = JSON.parse(http.responseText);
+    http.send(params);
 
-        if (patientid.id) {
-          sessionStorage.setItem("patientid", patientid.id);
-          sessionStorage.setItem("patientusername", username);
-        }
+    sessionStorage.setItem("patientid", username);
+    sessionStorage.setItem("patientusername", username);
+    window.location = '/';
+    return;
 
-        window.location = '/';
-        return;
-      }
-    }
-    http.send(null);
   } else {
     sessionStorage.setItem("patientid", username);
     sessionStorage.setItem("patientusername", username);
-     window.location = '/';
+    window.location = '/';  
   }
 }
 
 function logout() {
   sessionStorage.removeItem("patientid");
   sessionStorage.removeItem("patientusername");
-  window.location = '/login.html';
+  window.location = '/login';
   // window.location = "{% url 'login' %}";
   return;
 }

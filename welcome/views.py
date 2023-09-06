@@ -210,7 +210,7 @@ def info(request):
         if (CURRENTMODE == MODE['TEST']):
             patientdata = {
                 "personal": {
-                    "name": "Ralph",
+                    "name": "Ralph DAlmeida",
                     "age": 38,
                     "gender": "male",
                     "street": "34 Main Street",

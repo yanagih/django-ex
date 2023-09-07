@@ -145,14 +145,9 @@ def login(request):
     hostname = os.getenv('HOSTNAME', 'unknown')
     PageView.objects.create(hostname=hostname)
 
-    # TODO: ここにログイン処理を追加
-    print("login関数")
-    print(request.method)
     if (request.method == 'POST'):
         username = request.POST.get('username')
         password = request.POST.get('password')
-        print(username)
-        print(password)
         patient_login = backend_api.patient_login("", username, password)
 
     return render(request, 'test/site/public/login.html', {
@@ -176,7 +171,6 @@ CURRENTMODE = MODE['TEST']
 API_URL = ""
 
 def mode(request):
-    print("mode関数")
     global CURRENTMODE
     # app.jsの30-38行目を移植
     if (request.method == 'POST'):

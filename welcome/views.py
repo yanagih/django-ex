@@ -208,7 +208,7 @@ def info(request):
             #         "city": "Toronto",
             #         "zipcode": "M5H 1T1"
             #     },
-            #     "medications": ["Metoprolol", "ACE inhibitors", "request.GET.get('id')"],
+            #     "medications": ["Metoprolol", "ACE inhibitors", request.GET.get('id')],
             #     "appointments": ["2018-01-15 1:00 - Dentist", "2018-02-14 4:00 - Internal Medicine", "2018-09-30 8:00 - Pediatry"]
             # }
 
